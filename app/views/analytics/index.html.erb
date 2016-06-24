@@ -1,0 +1,8 @@
+<%= '%.2f' % @total_prices.sum %>
+
+<% @orders.each do |order| %>
+	
+	<h1><%= order.created_at %></h1>
+
+<% end %>
+

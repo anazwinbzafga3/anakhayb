@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% if content_for?(:head) %>
+	  <%= content_for(:head) %>
+	<% else %>
+	  <title>Default title</title>
+	<% end %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,400,600,700' rel='stylesheet' type='text/css'>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="signup-header">
+	<%= link_to "", root_path, class: "logo" %>
+</div>
+
+<%= yield %>
+
+</body>
+</html>

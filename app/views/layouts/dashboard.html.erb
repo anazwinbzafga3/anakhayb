@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% if content_for?(:head) %>
+    <%= content_for(:head) %>
+  <% else %>
+    <title>Default title</title>
+  <% end %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="main-nav">
+    <ul>
+        <li><%= link_to "", dashboard_path, class: "logo", data: { no_turbolink: true } %></li>
+    </ul>
+    <ul>
+        <li><%= link_to "Settings", settings_path %></li>
+        <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+    </ul>
+</div>
+
+
+<%= yield %>
+
+<div class="modal loading">
+    <div class="content">
+        <h1>Retrieving data</h1>
+        <p>This may take a while if the date range is too big</p>
+        <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+    </div>
+</div>
+
+<% if params[:first_visit] %>
+<div class="modal first-visit">
+    <div class="content">
+        <h1>Thank you for signing up!</h1>
+        <p>This is your dashboard. You can use the date picker to get data from specific date ranges.</p>
+        <div class="cta">
+          <a href="#" class="button">Continue ></a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  $(".first-visit .button").click(function(e) {
+    e.preventDefault();
+    $(".first-visit").hide();
+  });
+</script>
+<% end %>
+</body>
+</html>

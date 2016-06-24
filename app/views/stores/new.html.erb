@@ -1,0 +1,15 @@
+<% content_for :head do %>
+  <title>Shopify Metrics - Setup</title>
+<% end %>
+<div class="main-wrapper">
+  <h1>Your account has been created successfully!</h1>
+  <h3 class="light">Now you need to link your Shopify store with your account.</h3>
+  <%= form_for @store, url: {action: "create"} do |f| %>
+    <div class="form-group">
+      <%= f.label :shop_url %>
+      <%= f.text_field :shop_url, autofocus: true, class:"form-control", placeholder: "my-shop.myshopify.com" %>
+    </div>
+    <%= f.submit "Link my store", class: "button" %>
+  <% end %>
+
+</div>

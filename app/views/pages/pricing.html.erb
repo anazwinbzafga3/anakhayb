@@ -1,0 +1,92 @@
+<% content_for :head do %>
+  <title>Shopify Metrics - Pricing</title>
+<% end %>
+<div class="main-wrapper">
+<h1>Simple pricing. No hidden fees.</h1>
+<h3 class="light">All the plans have 7 days of free trial. Credit card isn't required.</h3>
+<div class="pricing-table container">
+
+	<div class="col-lg-3 pricing-plan">
+		<div class="header">
+			<h1>Starter</h1>
+			<h3>$35/mo</h3>
+		</div>
+		<div class="features">
+			<ul>
+				<li><span class="bold">$2,500</span> per month or less</li>
+				<li>Email support</li>
+				<li>All metrics and KPIs</li>
+			</ul>
+			<div class="cta">
+				<% if user_signed_in? %>
+					<%= link_to "Start free trial", new_user_registration_path, data: { no_turbolink: true }, class: "button" %>
+				<% else %>
+					<%= link_to "Start free trial", new_user_registration_path, class: "button" %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3 pricing-plan">
+		<div class="header">
+			<h1>Business</h1>
+			<h3>$70/mo</h3>
+		</div>
+		<div class="features">
+			<ul>
+				<li><span class="bold">$10,00</span> per month or less</li>
+				<li>Email support</li>
+				<li>All metrics and KPIs</li>
+			</ul>
+			<div class="cta">
+				<% if user_signed_in? %>
+					<%= link_to "Start free trial", new_user_registration_path, data: { no_turbolink: true }, class: "button" %>
+				<% else %>
+					<%= link_to "Start free trial", new_user_registration_path, class: "button" %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3 pricing-plan">
+		<div class="header">
+			<h1>Professional</h1>
+			<h3>$140/mo</h3>
+		</div>
+		<div class="features">
+			<ul>
+				<li><span class="bold">$50,000</span> per month or less</li>
+				<li>Email support</li>
+				<li>All metrics and KPIs</li>
+			</ul>
+			<div class="cta">
+				<% if user_signed_in? %>
+					<%= link_to "Start free trial", new_user_registration_path, data: { no_turbolink: true }, class: "button" %>
+				<% else %>
+					<%= link_to "Start free trial", new_user_registration_path, class: "button" %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3 pricing-plan">
+		<div class="header">
+			<h1>Entreprise</h1>
+			<h3>$300/mo</h3>
+		</div>
+		<div class="features no-border">
+			<ul>
+				<li><span class="bold">$200,000</span> per month or less</li>
+				<li>Email support</li>
+				<li>All metrics and KPIs</li>
+			</ul>
+			<div class="cta">
+				<% if user_signed_in? %>
+					<%= link_to "Start free trial", new_user_registration_path, data: { no_turbolink: true }, class: "button" %>
+				<% else %>
+					<%= link_to "Start free trial", new_user_registration_path, class: "button" %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+</div>
+<p class="larger-plan">If you need a larger plan, <a href="mailito:abdelmalek@shopifymetrics.com">get in touch</a> and we'll be happy to help!</p>
+</div>

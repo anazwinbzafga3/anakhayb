@@ -1,0 +1,22 @@
+<% content_for :head do %>
+  <title>Shopify Metrics - Log in</title>
+<% end %>
+<div class="main-wrapper">
+  <h1>Log in</h1>
+  <% flash.each do |key, value| %>
+  <p class="alert alert-<%= key %>"><%= value %></p>
+  <% end %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, class:"form-control", placeholder: "john@gmail.com" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off", class:"form-control", placeholder: "Secure password" %>
+    </div>
+    <%= f.submit "Log in", class: "button" %>
+    <%= render "users/shared/links" %>
+  <% end %>
+
+</div>

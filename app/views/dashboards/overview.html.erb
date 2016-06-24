@@ -1,0 +1,100 @@
+<% content_for :head do %>
+  <title>Shopify Metrics - Dashboard</title>
+<% end %>
+<div class="metrics-header">
+	<h3>Metrics Overview For <%= @shop.name %></h3>
+	<div class="daterange daterange--double"></div>
+</div>
+<div class="metrics">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Gross Sales</p>
+					<h3><%= @sales_formatted %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Orders</p>
+					<h3><%= @orders.count %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>New Customers</p>
+					<h3><%= @customers.count %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Repeated Customers</p>
+					<h3><%= @repeated_customers %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Average Order Value</p>
+					<h3><%= @aov %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Repeated Purchase Rate</p>
+					<h3><%= @rpr %>%</h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Purchase Frequency</p>
+					<h3><%= @pf %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Refunded Orders</p>
+					<h3><%= @refunded %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Cancelled Orders</p>
+					<h3><%= @cancelled %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Customer Value</p>
+					<h3><%= @customer_value %></h3>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="metrics-box">
+					<p>Customer Lifetime Value</p>
+					<h3><%= @clv %></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+    new Calendar({
+      element: $('.daterange--double'),
+      earliest_date: '<%= @shop.created_at %>',
+      start_date: '<%= @created_at_min %>',
+      end_date: '<%= @created_at_max %>',
+      latest_date: new Date(),
+      callback: function() {
+        var current_url = window.location.origin + window.location.pathname;
+        var start = moment(this.start_date).format('YYYY-MM-DD'),
+            end = moment(this.end_date).format('YYYY-MM-DD');
+        current_url += "?created_at_min=" + start
+        current_url += "&created_at_max=" + end
+        $(".modal.loading").show();
+        window.location = current_url;
+      }
+    });
+
+});
+</script>
