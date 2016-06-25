@@ -39,7 +39,4 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
     config.action_mailer.default_url_options = { :host => 'localhost' }
-
-  config.api_key = "38da6aeaef2b092a197ab5eb86c703a1"
-  config.secret_key = "a0d57525b0420b9f04847195e1c9a26f"
 end

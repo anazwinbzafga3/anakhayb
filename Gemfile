@@ -14,9 +14,9 @@ gem 'shopify_api', '~> 4.2'
 gem 'execjs'
 gem 'therubyracer'
 
-group :production do
-  gem 'rails_12factor'
-end
+# group :production do
+#   gem 'rails_12factor'
+# end
 group :development do
     gem 'capistrano', '~> 3.1',         require: false
     gem 'capistrano-rvm',     require: false
