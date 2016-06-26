@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  orders_count: 1
+  created_at: 1
+  total_spent: 1
+  store_id: 1
+
+two:
+  orders_count: 1
+  created_at: 1
+  total_spent: 1
+  store_id: 1

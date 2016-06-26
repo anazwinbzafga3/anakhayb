@@ -13,7 +13,9 @@ gem 'turbolinks'
 gem 'shopify_api', '~> 4.2'
 gem 'execjs'
 gem 'therubyracer'
-
+gem 'activerecord-import', '~> 0.13.0'
+gem 'delayed_job_active_record'
+gem "daemons"
 # group :production do
 #   gem 'rails_12factor'
 # end
@@ -25,6 +27,5 @@ group :development do
     gem 'capistrano3-puma',   require: false
     gem 'capistrano-figaro-yml', '~> 1.0.2'
 end
-
 gem 'puma'
 gem "figaro"

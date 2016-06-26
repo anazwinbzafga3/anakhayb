@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
 
 	before_action :authenticate_user!
-	before_action :has_store, except: [:payment,:create_payment,:activate_payment]
+	before_action :has_store, except: [:payment,:create_payment,:activate_payment,:export_data]
 	before_action :has_paid?, only: [:payment,:create_payment,:activate_payment]
 
 	 skip_before_action :verify_authenticity_token, only: [:activate_payment]
@@ -46,7 +46,9 @@ class StoresController < ApplicationController
 
 		if @store.save!
 
-			redirect_to dashboard_path(:first_visit => true)
+			ExportDataJob.perform_later @store
+			
+			redirect_to exporting_path
 
 		end
 
@@ -128,6 +130,18 @@ class StoresController < ApplicationController
 			redirect_to dashboard_path
 		end
 
+	end
+
+	def export_data
+
+		@store = current_user.store
+
+		@shop_session = ShopifyAPI::Session.new(@store.shop_url, @store.token)
+
+		ShopifyAPI::Base.activate_session(@shop_session)
+
+		@shop = ShopifyAPI::Shop.current
+		
 	end
 
 	protected
