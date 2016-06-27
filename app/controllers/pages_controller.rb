@@ -70,7 +70,7 @@ class PagesController < ApplicationController
 			@clv = number_to_currency(@clv)
 		end
 
-		render :layout => 'dashboard'
+		render :layout => 'demo'
 	end
 
 end

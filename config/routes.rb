@@ -30,7 +30,6 @@ Rails.application.routes.draw do
   get '/payment' => "stores#payment", :as => :payment
   post '/payment/create' => "stores#create_payment", :as => :create_payment
   get '/exporting' => "dashboards#exporting", :as => :exporting
-  get '/exporting_status' => "dashboards#exporting_status", :as => :exporting_status
   get '/demo' => "pages#demo", :as => :demo
 
   # Webhooks

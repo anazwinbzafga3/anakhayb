@@ -5,11 +5,7 @@
 	<h1>Ecommerce analytics and metrics for Shopify</h1>
 	<h3>With one click you get dozens of valuable metrics and KPIs from your Shopify store</h3>
 	<div class="cta">
-			<% if user_signed_in? %>
-				<%= link_to "Try it out for free", new_user_registration_path, data: { no_turbolink: true }, class: "button" %>
-			<% else %>
-				<%= link_to "Try it out for free", new_user_registration_path, class: "button" %>
-			<% end %>
+	<%= link_to "Try it out for free", new_user_registration_path, class: "button" %>
 	</div>
 	<img src="<%= image_url("preview.jpg") %>">
 </div>

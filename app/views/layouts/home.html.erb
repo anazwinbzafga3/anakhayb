@@ -17,22 +17,10 @@
 	<div class="container">
 		<%= link_to "", root_path	, class: "logo" %>
 		<ul>
-			<li><a href="">Demo</a></li>
+			<li><%= link_to "Demo", demo_path %></li>
 			<li><%= link_to "Pricing", pricing_path %></li>
-			<li>
-			<% if user_signed_in? %>
-				<%= link_to "Log in", new_user_session_path, data: { no_turbolink: true } %>
-			<% else %>
-				<%= link_to "Log in", new_user_session_path %>
-			<% end %>
-			</li>
-			<li>
-			<% if user_signed_in? %>
-				<%= link_to "Start free trial", new_user_registration_path, data: { no_turbolink: true }, class: "button" %>
-			<% else %>
-				<%= link_to "Start free trial", new_user_registration_path, class: "button" %>
-			<% end %>
-			</li>
+			<li><%= link_to "Log in", new_user_session_path %></li>
+			<li><%= link_to "Start free trial", new_user_registration_path, class: "button" %></li>
 		</ul>
 	</div>
 

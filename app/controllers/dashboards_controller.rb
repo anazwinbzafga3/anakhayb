@@ -91,16 +91,6 @@ class DashboardsController < ApplicationController
 		render :layout => 'dashboard'
 	end
 
-	def exporting_status
-		if request.xhr?
-			respond_to do |format|
-				format.json 
-			end
-		else
-			redirect_to root_path
-		end
-	end
-
 	def get_store
 
 		@store = current_user.store
