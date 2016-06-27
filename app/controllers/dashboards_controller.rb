@@ -17,140 +17,23 @@ class DashboardsController < ApplicationController
 
 	def overview
 
-		# cycle = 0
-
 		@created_at_min = Date.today
 
-		@created_at_max = Date.tomorrow
+		@created_at_max = Date.today
 
 		if params[:created_at_min]
-			@created_at_min = params[:created_at_min]
+			@created_at_min = Date.parse(params[:created_at_min])
 		end
 
 		if params[:created_at_max]
-			@created_at_max = params[:created_at_max]
+			@created_at_max = Date.parse(params[:created_at_max])
 		end
-
-		# order_count = ShopifyAPI::Order.count({:status => "any", :created_at_min => @created_at_min,created_at_max: @created_at_max})
-
-		# order_pages = (order_count / 250).ceil + 1
-
-		# start_time = Time.now
-
-		# @orders = []
-
-		# if order_count > 250
-
-		# 	1.upto(order_pages) do |page|
-		# 	  unless page == 1
-		# 	    stop_time = Time.now
-		# 	    processing_duration = stop_time - start_time
-		# 	    wait_time = (cycle - processing_duration).ceil
-		# 	    sleep wait_time if wait_time > 0
-		# 	    start_time = Time.now
-		# 	  end
-		# 	  @orders += ShopifyAPI::Order.find(:all, params: { created_at_min: @created_at_min,created_at_max: @created_at_max, page: page , status: 'any' , limit: 250 }).to_a
-
-		# 	end
-
-		# else
-		# 	@orders += ShopifyAPI::Order.find(:all, params: { created_at_min: @created_at_min,created_at_max: @created_at_max , status: 'any' , limit: 250 })
-		# end
-
-		# @customers = []
-
-		# customer_count = ShopifyAPI::Customer.count({:created_at_min => @created_at_min,created_at_max: @created_at_max})
-
-		# customer_pages = (customer_count / 250).ceil + 1
-
-		# start_time = Time.now
-
-		# if customer_count > 250
-
-		# 	1.upto(customer_pages) do |page|
-		# 	  unless page == 1
-		# 	    stop_time = Time.now
-		# 	    processing_duration = stop_time - start_time
-		# 	    wait_time = (cycle - processing_duration).ceil
-		# 	    sleep wait_time if wait_time > 0
-		# 	    start_time = Time.now
-		# 	  end
-		# 	  @customers += ShopifyAPI::Customer.find(:all, params: { created_at_min: @created_at_min,created_at_max: @created_at_max, page: page , limit: 250 }).to_a
-
-		# 	end
-
-		# else
-		# 	@customers += ShopifyAPI::Customer.find(:all, params: { created_at_min: @created_at_min,created_at_max: @created_at_max , limit: 250 })
-		# end
-
-		# @customers.delete_if do |customer|
-		# 	if !customer.last_order_id
-		# 		true
-		# 	end
-		# end
-
-		# @sales = '%.2f' % @orders.inject(0){|sum,e| sum += e.total_price.to_f }
-
-		# @sales_formatted = number_to_currency(@sales)
-
-		# @refunded = ShopifyAPI::Order.count({:financial_status => "refunded", :created_at_min => @created_at_min,created_at_max: @created_at_max})
-
-		# @cancelled = ShopifyAPI::Order.count({:status => "cancelled", :created_at_min => @created_at_min,created_at_max: @created_at_max})
-
-		# @repeated_customers = @orders.count - @customers.count
-
-		# @aov = 0
-
-		# @rpr = 0
-
-		# @pf = 0
-
-		# @customer_value = 0
-
-		# @clv = 0
-
-		# @shop_earliest = @shop.created_at
-
-		# @time = (Date.parse(@created_at_max.to_s) - Date.parse(@created_at_min.to_s)).to_i
-
-		# if @orders.count > 0
-
-		# 	@rpr = '%.2f' % (((@orders.count - @customers.count).to_f / @customers.count) * 100)
-
-		# 	@pf = '%.2f' % (@orders.count.to_f / @customers.count)
-
-		# 	@aov = '%.2f' % (@sales.to_f / @orders.count)
-
-		# 	@customer_value = '%.2f' % (@aov.to_f * @pf.to_f)
-
-		# 	@clv = @customer_value.to_f * 2
-
-		# 	@aov = number_to_currency(@aov)
-
-		# 	@customer_value = number_to_currency(@customer_value)
-
-		# 	@clv = number_to_currency(@clv)
-		# end
-
-		# today = Date.today
-
-		# @since = 1
-
-		# @until = 1
-
-		# if params[:created_at_min]
-		# 	@since = (Date.parse(@created_at_min) - today).to_i
-		# end
-
-		# if params[:created_at_max]
-		# 	@since = (Date.parse(@created_at_max) - today).to_i
-		# end
 
 		@store = current_user.store
 
-		@orders = @store.orders.where(:created_at => @created_at_min..@created_at_max)
+		@orders = @store.orders.where(:created_at => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
 
-		@customers = @store.customers.where(:created_at => @created_at_min..@created_at_max)
+		@customers = @store.customers.where(:created_at => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
 
 		@repeated_customers = @orders.count - @customers.count
 
@@ -158,9 +41,9 @@ class DashboardsController < ApplicationController
 
 		@sales_formatted = number_to_currency(@sales)
 
-		@refunded = @orders.where(:status => "refunded", :created_at => @created_at_min..@created_at_max).count
+		@refunded = @orders.where(:financial_status => "refunded", :created_at => @created_at_min.beginning_of_day..@created_at_max.end_of_day).count
 
-		@cancelled = @orders.where(:cancelled => "true").count
+		@cancelled = @orders.where(:status => "cancelled").count
 
 		@aov = 0
 
@@ -174,13 +57,13 @@ class DashboardsController < ApplicationController
 
 		@shop_earliest = @shop.created_at
 
-		@time = (Date.parse(@created_at_max.to_s) - Date.parse(@created_at_min.to_s)).to_i
+		@time = (Date.parse(@created_at_max.end_of_day.to_s) - Date.parse(@created_at_min.beginning_of_day.to_s)).to_i
 
 		if @orders.count > 0
 
-			@rpr = '%.2f' % (((@orders.count - @customers.count).to_f / @customers.count) * 100)
+			@rpr = '%.2f' % (((@orders.count - @customers.count).to_f / (@customers.count + @repeated_customers)) * 100)
 
-			@pf = '%.2f' % (@orders.count.to_f / @customers.count)
+			@pf = '%.2f' % (@orders.count.to_f / (@customers.count + @repeated_customers))
 
 			@aov = '%.2f' % (@sales.to_f / @orders.count)
 

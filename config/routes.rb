@@ -31,5 +31,13 @@ Rails.application.routes.draw do
   post '/payment/create' => "stores#create_payment", :as => :create_payment
   get '/exporting' => "dashboards#exporting", :as => :exporting
   get '/exporting_status' => "dashboards#exporting_status", :as => :exporting_status
+  get '/demo' => "pages#demo", :as => :demo
+
+  # Webhooks
+
+  post "/webhooks/orders/create/:store_id" => "webhooks#order_create"
+  post "/webhooks/orders/update/:store_id" => "webhooks#order_update"
+  post "/webhooks/customers/create/:store_id" => "webhooks#customer_create"
+  post "/webhooks/customers/update/:store_id" => "webhooks#customer_update"
   
 end

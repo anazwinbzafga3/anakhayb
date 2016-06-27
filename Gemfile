@@ -16,6 +16,7 @@ gem 'therubyracer'
 gem 'activerecord-import', '~> 0.13.0'
 gem 'delayed_job_active_record'
 gem "daemons"
+gem 'yaml_db'
 # group :production do
 #   gem 'rails_12factor'
 # end

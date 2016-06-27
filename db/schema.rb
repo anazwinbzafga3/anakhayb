@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160626065915) do
+ActiveRecord::Schema.define(version: 20160627022601) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -54,13 +54,13 @@ ActiveRecord::Schema.define(version: 20160626065915) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.string   "status",      limit: 255
-    t.integer  "total_price", limit: 4
-    t.integer  "store_id",    limit: 4
-    t.datetime "updated_at",              null: false
-    t.string   "order_id",    limit: 255
-    t.string   "cancelled",   limit: 255
+    t.datetime "created_at",                   null: false
+    t.string   "status",           limit: 255
+    t.integer  "total_price",      limit: 4
+    t.integer  "store_id",         limit: 4
+    t.datetime "updated_at",                   null: false
+    t.string   "order_id",         limit: 255
+    t.string   "financial_status", limit: 255
   end
 
   create_table "stores", force: :cascade do |t|
