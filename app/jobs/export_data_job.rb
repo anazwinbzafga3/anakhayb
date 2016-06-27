@@ -3,7 +3,11 @@ class ExportDataJob < ActiveJob::Base
 
   def perform(store)
 
-  	if Rails.env.production?
+    @shop_session = ShopifyAPI::Session.new(store.shop_url, store.token)
+
+	ShopifyAPI::Base.activate_session(@shop_session)
+
+	if Rails.env.production?
 
   	ShopifyAPI::Webhook.create({ topic: "orders/create", address: "http://shopifymetrics.com/webhooks/orders/create/#{store.id}"})
 
@@ -25,11 +29,7 @@ class ExportDataJob < ActiveJob::Base
 
 	end
 
-  	store.update_attributes export_status: "exporting"
-
-    @shop_session = ShopifyAPI::Session.new(store.shop_url, store.token)
-
-	ShopifyAPI::Base.activate_session(@shop_session)
+	store.update_attributes export_status: "exporting"
 
 	order_count = ShopifyAPI::Order.count({:status => "any"})
 
