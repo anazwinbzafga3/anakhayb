@@ -2,7 +2,7 @@
 lock '3.5.0'
 
 # Change these
-server '192.241.178.103', port: 22, roles: [:web, :app, :db], primary: true
+server '162.243.218.43', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:anazwinbzafga3/anakhayb.git'
 set :application,     'shopifymetrics'
