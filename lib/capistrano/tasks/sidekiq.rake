@@ -1,12 +1,12 @@
 namespace :sidekiq do
   task :quiet do
     on roles(:app) do
-      puts capture("pgrep -f 'workers' | xargs kill -USR1")
+      puts capture("pgrep -f 'sidekiq' | xargs kill -USR1")
     end
   end
   task :restart do
     on roles(:app) do
-      execute :sudo, :initctl, :restart, :sidekiq, "index=0"
+      execute :sudo, :service, :sidekiq, :restart, "index=0"
     end
   end
 end
