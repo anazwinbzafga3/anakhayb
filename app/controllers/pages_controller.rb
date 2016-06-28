@@ -25,7 +25,7 @@ class PagesController < ApplicationController
 
 		@currency = "$"
 
-		@store = User.find_by(email: "abdelmalek3a@gmail.com").store
+		@store = User.find_by(email: "demo@shopifymetrics.com").store
 
 		@orders = @store.orders.where(:creation_date => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
 
