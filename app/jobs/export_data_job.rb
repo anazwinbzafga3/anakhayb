@@ -35,7 +35,19 @@ class ExportDataJob < ActiveJob::Base
 
 	order_pages = (order_count / 250).ceil + 1
 
+  wait_cycle = 0.5
+
+  start_time = Time.now
+
 	1.upto(order_pages) do |page|
+
+    unless page == 1
+      stop_time = Time.now
+      processing_duration = stop_time - start_time
+      wait_time = (wait_cycle - processing_duration).ceil
+      sleep wait_time if wait_time > 0
+      start_time = Time.now
+    end
 
 	  orders = ShopifyAPI::Order.find(:all, params: {page: page , status: 'any' , limit: 250})
 
@@ -49,7 +61,17 @@ class ExportDataJob < ActiveJob::Base
 
 	customer_pages = (customer_count / 250).ceil + 1
 
+  start_time = Time.now
+
 	1.upto(customer_pages) do |page|
+
+    unless page == 1
+      stop_time = Time.now
+      processing_duration = stop_time - start_time
+      wait_time = (wait_cycle - processing_duration).ceil
+      sleep wait_time if wait_time > 0
+      start_time = Time.now
+    end
 
 	  customers = ShopifyAPI::Customer.find(:all, params: {page: page, limit: 250})
 

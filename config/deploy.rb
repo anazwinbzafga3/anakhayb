@@ -82,11 +82,6 @@ namespace :deploy do
   after  :finishing,    :restart
 end
 
-namespace :delayed_job do
-  desc "Restarting delayed job"
-  invoke "delayed_job:restart"
-end
-
 # ps aux | grep puma    # Get puma pid
 # kill -s SIGUSR2 pid   # Restart puma
 # kill -s SIGTERM pid   # Stop puma

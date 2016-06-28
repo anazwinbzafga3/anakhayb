@@ -26,6 +26,12 @@ Rails.application.routes.draw do
     put "/settings" => "users/registrations#update"
     patch "/settings" => "users/registrations#update"
   end
+
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.email == "abdelmalek3a@gmail.com" } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   root 'pages#homepage'
   get '/pricing' => "pages#pricing"
   get '/setup' => 'stores#new'

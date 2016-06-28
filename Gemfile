@@ -14,9 +14,10 @@ gem 'shopify_api', '~> 4.2'
 gem 'execjs'
 gem 'therubyracer'
 gem 'activerecord-import', '~> 0.13.0'
-gem 'delayed_job_active_record'
+gem 'sidekiq'
 gem "daemons"
 gem 'yaml_db'
+gem 'sinatra', :require => false
 # group :production do
 #   gem 'rails_12factor'
 # end
@@ -27,7 +28,6 @@ group :development do
     gem 'capistrano-bundler', require: false
     gem 'capistrano3-puma',   require: false
     gem 'capistrano-figaro-yml', '~> 1.0.2'
-    gem 'capistrano3-delayed-job', '~> 1.0'
 end
 gem 'puma'
 gem "figaro"
