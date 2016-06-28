@@ -1,3 +1,4 @@
+set :sidekiq_log => File.join(release_path, 'log', 'sidekiq.log')
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
