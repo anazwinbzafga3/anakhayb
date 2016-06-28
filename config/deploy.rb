@@ -26,7 +26,7 @@ set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRec
 
-set :sidekiq_log => File.join(release_path, 'log', 'sidekiq.log')
+set :sidekiq_log => File.join(current_path, 'log', 'zbelbola.log')
 ## Defaults:
 # set :scm,           :git
 # set :branch,        :master
