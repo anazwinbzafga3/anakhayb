@@ -6,7 +6,7 @@ namespace :sidekiq do
   end
   task :restart do
     on roles(:app) do
-      execute :sudo, :initctl, :restart, :sidekiq
+      execute :sudo, :initctl, :restart, :sidekiq, "index=0"
     end
   end
 end
