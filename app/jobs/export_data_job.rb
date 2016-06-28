@@ -19,13 +19,13 @@ class ExportDataJob < ActiveJob::Base
 
   	else
 
-  	ShopifyAPI::Webhook.create({ topic: "orders/create", address: "http://1c7ebf6e.ngrok.io/webhooks/orders/create/#{store.id}"})
+  	ShopifyAPI::Webhook.create({ topic: "orders/create", address: "http://df0de420.ngrok.io/webhooks/orders/create/#{store.id}"})
 
-	ShopifyAPI::Webhook.create({ topic: "orders/updated", address: "http://1c7ebf6e.ngrok.io/webhooks/orders/update/#{store.id}"})
+	ShopifyAPI::Webhook.create({ topic: "orders/updated", address: "http://df0de420.ngrok.io/webhooks/orders/update/#{store.id}"})
 
-	ShopifyAPI::Webhook.create({ topic: "customers/create", address: "http://1c7ebf6e.ngrok.io/webhooks/customers/create/#{store.id}"})
+	ShopifyAPI::Webhook.create({ topic: "customers/create", address: "http://df0de420.ngrok.io/webhooks/customers/create/#{store.id}"})
 
-	ShopifyAPI::Webhook.create({ topic: "customers/update", address: "http://1c7ebf6e.ngrok.io/webhooks/customers/update/#{store.id}"})
+	ShopifyAPI::Webhook.create({ topic: "customers/update", address: "http://df0de420.ngrok.io/webhooks/customers/update/#{store.id}"})
 
 	end
 
@@ -41,7 +41,7 @@ class ExportDataJob < ActiveJob::Base
 
 	  orders = orders.to_a.map { |order| [order.id,order.total_price,order.created_at,order.financial_status, ("cancelled" if order.cancelled_at) || ("closed" if order.closed_at) || "open"] }
 
-	  store.orders.import [:order_id,:total_price,:created_at,:financial_status,:status], orders, :validate => false
+	  store.orders.import [:order_id,:total_price,:creation_date,:financial_status,:status], orders, :validate => false
 
 	end
 
@@ -55,7 +55,7 @@ class ExportDataJob < ActiveJob::Base
 
 	  customers = customers.to_a.map { |customer| [customer.id,customer.orders_count,customer.total_spent,customer.created_at] }
 
-	  store.customers.import [:customer_id,:orders_count,:total_spent,:created_at], customers, :validate => false
+	  store.customers.import [:customer_id,:orders_count,:total_spent,:creation_date], customers, :validate => false
 
 	end
 

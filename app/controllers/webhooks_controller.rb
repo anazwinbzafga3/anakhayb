@@ -19,7 +19,7 @@ class WebhooksController < ApplicationController
 	end
 
 	def customer_update
-		# @store.customers.find_by(customer_id: params[:id]).update_attributes! orders_count: params[:orders_count], total_spent: params[:total_spent]
+		@store.customers.find_by(customer_id: params[:id]).update_attributes! orders_count: params[:orders_count], total_spent: params[:total_spent]
 		render :text => "success"
 	end
 

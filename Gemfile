@@ -27,6 +27,7 @@ group :development do
     gem 'capistrano-bundler', require: false
     gem 'capistrano3-puma',   require: false
     gem 'capistrano-figaro-yml', '~> 1.0.2'
+    gem 'capistrano3-delayed-job', '~> 1.0'
 end
 gem 'puma'
 gem "figaro"

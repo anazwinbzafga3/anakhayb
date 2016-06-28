@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
+
+  # Error pages
+  match "/404", :to => "errors#not_found", :via => :all
+  match "/500", :to => "errors#internal_server_error", :via => :all
+
   devise_for :users, :skip => [:sessions,:registrations,:passwords], controllers: { sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords'}
   as :user do
 
@@ -38,5 +43,7 @@ Rails.application.routes.draw do
   post "/webhooks/orders/update/:store_id" => "webhooks#order_update"
   post "/webhooks/customers/create/:store_id" => "webhooks#customer_create"
   post "/webhooks/customers/update/:store_id" => "webhooks#customer_update"
-  
+
+
+
 end

@@ -17,7 +17,7 @@ class DashboardsController < ApplicationController
 
 	def overview
 
-		@created_at_min = Date.today
+		@created_at_min = Date.today - 7.days
 
 		@created_at_max = Date.today
 
@@ -29,21 +29,23 @@ class DashboardsController < ApplicationController
 			@created_at_max = Date.parse(params[:created_at_max])
 		end
 
-		@store = current_user.store
+		@currency = @shop.money_format.chomp(" {{amount}}")
 
-		@orders = @store.orders.where(:created_at => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
+		@shop_earliest = @shop.created_at
 
-		@customers = @store.customers.where(:created_at => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
+		@orders = @store.orders.where(:creation_date => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
 
-		@repeated_customers = @orders.count - @customers.count
+		@customers = @store.customers.where(:creation_date => @created_at_min.beginning_of_day..@created_at_max.end_of_day, :orders_count => 1..Float::INFINITY)
+
+		@repeated_customers = @orders.length - @customers.length
 
 		@sales = '%.2f' % @orders.inject(0){|sum,e| sum += e.total_price.to_f }
 
-		@sales_formatted = number_to_currency(@sales)
+		@sales_formatted = number_to_currency(@sales, unit: @currency)
 
-		@refunded = @orders.where(:financial_status => "refunded", :created_at => @created_at_min.beginning_of_day..@created_at_max.end_of_day).count
+		@refunded = @orders.where(:financial_status => "refunded", :creation_date => @created_at_min.beginning_of_day..@created_at_max.end_of_day).length
 
-		@cancelled = @orders.where(:status => "cancelled").count
+		@cancelled = @orders.where(:status => "cancelled").length
 
 		@aov = 0
 
@@ -55,27 +57,25 @@ class DashboardsController < ApplicationController
 
 		@clv = 0
 
-		@shop_earliest = @shop.created_at
+		# @time = (Date.parse(@created_at_max.end_of_day.to_s) - Date.parse(@created_at_min.beginning_of_day.to_s)).to_i
 
-		@time = (Date.parse(@created_at_max.end_of_day.to_s) - Date.parse(@created_at_min.beginning_of_day.to_s)).to_i
+		if @orders.length > 0
 
-		if @orders.count > 0
+			@rpr = '%.2f' % (((@orders.length - @customers.length).to_f / (@customers.length + @repeated_customers)) * 100)
 
-			@rpr = '%.2f' % (((@orders.count - @customers.count).to_f / (@customers.count + @repeated_customers)) * 100)
+			@pf = '%.2f' % (@orders.length.to_f / @customers.length)
 
-			@pf = '%.2f' % (@orders.count.to_f / (@customers.count + @repeated_customers))
-
-			@aov = '%.2f' % (@sales.to_f / @orders.count)
+			@aov = '%.2f' % (@sales.to_f / @orders.length)
 
 			@customer_value = '%.2f' % (@aov.to_f * @pf.to_f)
 
 			@clv = @customer_value.to_f * 2
 
-			@aov = number_to_currency(@aov)
+			@aov = number_to_currency(@aov, unit: @currency)
 
-			@customer_value = number_to_currency(@customer_value)
+			@customer_value = number_to_currency(@customer_value, unit: @currency)
 
-			@clv = number_to_currency(@clv)
+			@clv = number_to_currency(@clv, unit: @currency)
 		end
 
 		render :layout => 'dashboard'

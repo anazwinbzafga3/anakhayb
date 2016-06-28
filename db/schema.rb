@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627022601) do
+ActiveRecord::Schema.define(version: 20160628010948) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -29,12 +29,13 @@ ActiveRecord::Schema.define(version: 20160627022601) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "customers", force: :cascade do |t|
-    t.integer  "orders_count", limit: 4
-    t.datetime "created_at",               null: false
-    t.integer  "total_spent",  limit: 4
-    t.integer  "store_id",     limit: 4
-    t.datetime "updated_at",               null: false
-    t.string   "customer_id",  limit: 255
+    t.integer  "orders_count",  limit: 4
+    t.datetime "created_at",                null: false
+    t.string   "total_spent",   limit: 255
+    t.integer  "store_id",      limit: 4
+    t.datetime "updated_at",                null: false
+    t.string   "customer_id",   limit: 255
+    t.string   "creation_date", limit: 255
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -56,11 +57,12 @@ ActiveRecord::Schema.define(version: 20160627022601) do
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at",                   null: false
     t.string   "status",           limit: 255
-    t.integer  "total_price",      limit: 4
+    t.string   "total_price",      limit: 255
     t.integer  "store_id",         limit: 4
     t.datetime "updated_at",                   null: false
     t.string   "order_id",         limit: 255
     t.string   "financial_status", limit: 255
+    t.string   "creation_date",    limit: 255
   end
 
   create_table "stores", force: :cascade do |t|
