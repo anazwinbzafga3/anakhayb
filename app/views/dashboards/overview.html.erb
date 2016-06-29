@@ -10,67 +10,67 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="sales">
 					<p>Gross Sales</p>
 					<h3><%= @sales_formatted %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="orders">
 					<p>Orders</p>
 					<h3><%= @orders.length %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="new_customers">
 					<p>New Customers</p>
 					<h3><%= @customers.length %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="repeated_customers">
 					<p>Repeated Customers</p>
 					<h3><%= @repeated_customers %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="aov">
 					<p>Average Order Value</p>
 					<h3><%= @aov %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="rpr">
 					<p>Repeated Purchase Rate</p>
 					<h3><%= @rpr %>%</h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="pf">
 					<p>Purchase Frequency</p>
 					<h3><%= @pf %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="refunded_orders">
 					<p>Refunded Orders</p>
 					<h3><%= @refunded %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="cancelled_orders">
 					<p>Cancelled Orders</p>
 					<h3><%= @cancelled %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="customer_value">
 					<p>Customer Value</p>
 					<h3><%= @customer_value %></h3>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="metrics-box">
+				<div class="metrics-box" data-metric="clv">
 					<p>Customer Lifetime Value</p>
 					<h3><%= @clv %></h3>
 				</div>
@@ -87,12 +87,28 @@
       end_date: '<%= @created_at_max %>',
       latest_date: new Date(),
       callback: function() {
-        var current_url = window.location.origin + window.location.pathname;
+        var current_url = window.location.pathname;
         var start = moment(this.start_date).format('YYYY-MM-DD'),
             end = moment(this.end_date).format('YYYY-MM-DD');
-        current_url += "?created_at_min=" + start
-        current_url += "&created_at_max=" + end
-        window.location = current_url;
+        current_url += "?created_at_min=" + start;
+        current_url += "&created_at_max=" + end;
+        $.ajax({
+          url: "/dashboard.json",
+          data: {
+            created_at_min: start,
+            created_at_max: end
+          }
+        })
+        .complete(function(data){
+          response = data.responseJSON;
+          $(".metrics-box h3").each(function(index){
+            $(this).fadeTo("medium",0,function(){
+              $(this).text(response[$(this).parent().data("metric")]).delay(100*index).fadeTo("medium",1);
+            });
+          });
+          window.history.pushState("Object", "", current_url);
+        });
+
       }
     });
 

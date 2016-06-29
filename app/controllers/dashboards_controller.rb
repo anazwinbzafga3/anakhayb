@@ -76,9 +76,30 @@ class DashboardsController < ApplicationController
 			@customer_value = number_to_currency(@customer_value, unit: @currency)
 
 			@clv = number_to_currency(@clv, unit: @currency)
-		end
 
-		render :layout => 'dashboard'
+		end
+		@data = {
+			sales: @sales_formatted,
+			orders: @orders.length,
+			new_customers: @customers.length,
+			repeated_customers: @repeated_customers,
+			aov: @aov,
+			rpr: @rpr,
+			pf: @pf,
+			refunded_orders: @refunded,
+			cancelled_orders: @cancelled,
+			customer_value: @customer_value,
+			clv: @clv
+		}
+		respond_to do |format|
+			format.json {
+				render :json => @data
+				return
+			}
+			format.html {
+				render :layout => 'dashboard'
+			}
+		end
 
 
 	end
