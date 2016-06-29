@@ -43,8 +43,6 @@ class DashboardsController < ApplicationController
 
 		@sales_formatted = number_to_currency(@sales, unit: @currency)
 
-		# @refunded = @orders.where(:financial_status => "refunded").length
-
 		@refunded = @orders.to_a.select { |order| order.financial_status == "refunded" }.length
 
 		@cancelled = @orders.to_a.select { |order| order.status == "cancelled" }.length
