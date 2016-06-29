@@ -25,7 +25,7 @@ class PagesController < ApplicationController
 
 		@currency = "$"
 
-		@store = User.find_by(email: "abdelmalek3a@gmail.com").store
+		@store = User.find_by(email: "demo@shopifymetrics.com").store
 
 		@orders = @store.orders.where(:creation_date => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
 
@@ -40,7 +40,7 @@ class PagesController < ApplicationController
 		@refunded = @orders.to_a.select { |order| order.financial_status == "refunded" }.length
 
 		@cancelled = @orders.to_a.select { |order| order.status == "cancelled" }.length
-		
+
 		@aov = 0
 
 		@rpr = 0
