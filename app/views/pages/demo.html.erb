@@ -81,7 +81,7 @@
     $(document).ready(function(){
     new Calendar({
       element: $('.daterange--double'),
-      earliest_date: '2013-06-13',
+      earliest_date: '<%= @store.shop_earliest %>',
       start_date: '<%= @created_at_min %>',
       end_date: '<%= @created_at_max %>',
       latest_date: new Date(),
