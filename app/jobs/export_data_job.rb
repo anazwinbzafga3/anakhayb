@@ -49,7 +49,7 @@ class ExportDataJob < ActiveJob::Base
       start_time = Time.now
     end
 
-	  orders = ShopifyAPI::Order.find(:all, params: {page: page , status: 'any' , limit: 250, fields: "id,total_price,created_at,financial_status"})
+	  orders = ShopifyAPI::Order.find(:all, params: {page: page , status: 'any' , limit: 250, fields: "id,total_price,created_at,financial_status,cancelled_at,closed_at"})
 
 	  orders = orders.to_a.map { |order| [order.id,order.total_price,order.created_at,order.financial_status, ("cancelled" if order.cancelled_at) || ("closed" if order.closed_at) || "open"] }
 
