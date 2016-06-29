@@ -2,7 +2,7 @@
   <title>Shopify Metrics - Dashboard</title>
 <% end %>
 <div class="metrics-header">
-	<h3>Metrics Overview For <%= @shop.name %></h3>
+	<h3>Metrics Overview For <%= @store.name %></h3>
 	<div class="daterange daterange--double"></div>
 </div>
 <div class="metrics">
@@ -81,7 +81,7 @@
     $(document).ready(function(){
     new Calendar({
       element: $('.daterange--double'),
-      earliest_date: '<%= @shop.created_at %>',
+      earliest_date: '<%= @store.shop_earliest %>',
       start_date: '<%= @created_at_min %>',
       end_date: '<%= @created_at_max %>',
       latest_date: new Date(),

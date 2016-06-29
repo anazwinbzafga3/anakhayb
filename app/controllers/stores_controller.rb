@@ -44,10 +44,22 @@ class StoresController < ApplicationController
 
 		@store.token = JSON.parse(request.body)['access_token']
 
+		@shop_session = ShopifyAPI::Session.new(@store.shop_url, @store.token)
+
+		ShopifyAPI::Base.activate_session(@shop_session)
+
+		@shop = ShopifyAPI::Shop.current
+
+		@store.name = @shop.name
+
+		@store.shop_earliest = @shop.created_at
+		
+		@store.currency = @shop.money_format.chomp(" {{amount}}")
+
 		if @store.save!
 
 			ExportDataJob.perform_later @store
-			
+
 			redirect_to exporting_path
 
 		end
@@ -106,7 +118,7 @@ class StoresController < ApplicationController
 		when sales < 200000
 			price = 300
 		end
-				
+
 
 		@response = ShopifyAPI::RecurringApplicationCharge.create({
 			"price": price,
@@ -141,7 +153,7 @@ class StoresController < ApplicationController
 		ShopifyAPI::Base.activate_session(@shop_session)
 
 		@shop = ShopifyAPI::Shop.current
-		
+
 	end
 
 	protected

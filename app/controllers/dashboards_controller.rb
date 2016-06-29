@@ -29,9 +29,9 @@ class DashboardsController < ApplicationController
 			@created_at_max = Date.parse(params[:created_at_max])
 		end
 
-		@currency = @shop.money_format.chomp(" {{amount}}")
+		@currency = @store.currency
 
-		@shop_earliest = @shop.created_at
+		@shop_earliest = @store.currency
 
 		@orders = @store.orders.where(:creation_date => @created_at_min.beginning_of_day..@created_at_max.end_of_day)
 
@@ -94,12 +94,6 @@ class DashboardsController < ApplicationController
 	def get_store
 
 		@store = current_user.store
-
-		@shop_session = ShopifyAPI::Session.new(@store.shop_url, @store.token)
-
-		ShopifyAPI::Base.activate_session(@shop_session)
-
-		@shop = ShopifyAPI::Shop.current
 
 
 	end

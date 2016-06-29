@@ -3,7 +3,7 @@ class ExportDataJob < ActiveJob::Base
 
   def perform(store)
 
-    @shop_session = ShopifyAPI::Session.new(store.shop_url, store.token)
+  @shop_session = ShopifyAPI::Session.new(store.shop_url, store.token)
 
 	ShopifyAPI::Base.activate_session(@shop_session)
 
@@ -49,7 +49,7 @@ class ExportDataJob < ActiveJob::Base
       start_time = Time.now
     end
 
-	  orders = ShopifyAPI::Order.find(:all, params: {page: page , status: 'any' , limit: 250})
+	  orders = ShopifyAPI::Order.find(:all, params: {page: page , status: 'any' , limit: 250, fields: "id,total_price,created_at,financial_status"})
 
 	  orders = orders.to_a.map { |order| [order.id,order.total_price,order.created_at,order.financial_status, ("cancelled" if order.cancelled_at) || ("closed" if order.closed_at) || "open"] }
 
@@ -73,7 +73,7 @@ class ExportDataJob < ActiveJob::Base
       start_time = Time.now
     end
 
-	  customers = ShopifyAPI::Customer.find(:all, params: {page: page, limit: 250})
+	  customers = ShopifyAPI::Customer.find(:all, params: {page: page, limit: 250, fields: "id,orders_count,total_spent,created_at"})
 
 	  customers = customers.to_a.map { |customer| [customer.id,customer.orders_count,customer.total_spent,customer.created_at] }
 
