@@ -53,7 +53,7 @@ class StoresController < ApplicationController
 		@store.name = @shop.name
 
 		@store.shop_earliest = @shop.created_at
-		
+
 		@store.currency = @shop.money_format.chomp(" {{amount}}")
 
 		if @store.save!
@@ -112,11 +112,11 @@ class StoresController < ApplicationController
 		when sales < 2500
 			price = 35
 		when sales < 10000
-			price = 70
+			price = 60
 		when sales < 50000
-			price = 140
+			price = 120
 		when sales < 200000
-			price = 300
+			price = 240
 		end
 
 

@@ -106,7 +106,7 @@ class DashboardsController < ApplicationController
 
 	def exporting
 		if current_user.store.export_status == "finished"
-			redirect_to dashboard_path
+			redirect_to dashboard_path(:first_visit => true)
 			return
 		end
 		render :layout => 'dashboard'

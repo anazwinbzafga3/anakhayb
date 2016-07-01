@@ -91,7 +91,7 @@ class PagesController < ApplicationController
 				return
 			}
 			format.html {
-				render :layout => 'dashboard'
+				render :layout => 'demo'
 			}
 		end
 	end
